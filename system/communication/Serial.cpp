@@ -94,3 +94,20 @@ void Serial::endLine()
 {
 	string_P(vEndLine);
 }
+
+void Serial::hex_1(uint8_t digit)
+{
+	sendByte( hex_dec(digit >> 4) );
+	sendByte( hex_dec(digit) );
+}
+
+char Serial::hex_dec(uint8_t cod)
+{
+	char sim = cod & 0x0f;
+	if (sim > 9)
+	{
+		sim += 7;
+	}
+	sim += '0';
+	return sim;
+}

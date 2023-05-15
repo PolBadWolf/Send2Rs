@@ -8,11 +8,11 @@
 #include <avr/io.h>
 #include "device.h"
 
-#define SCR ns_device::scr
-#define KEY ns_device::key
+// #define SCR ns_device::scr
+// #define KEY ns_device::key
 
-#include "user/Sensors.h"
-#define STECK_TUBE ns_device::steckTube
+// #include "user/Sensors.h"
+// #define STECK_TUBE ns_device::steckTube
 
 // #include "DeB.h" // ***********
 
@@ -32,6 +32,7 @@ int main(void)
 	// ====================
 	ns_device::Init();
 	sei();
+//	rs_232->hex_1(0xe6);
 #ifdef CONF_MENU
   	__delay_ms(1000);
 // 	rs_232->string_P(PSTR("\r\nHello world !!!\r\n"));
@@ -76,21 +77,21 @@ int main(void)
 // 		//ns_device::scr->Interrupt();
 // 	}
 // ==================--------------=================
-	SCR->Clear();
-	SCR->flicker = false;
-	ns_sensors::setDebugStat(false);
-	uint8_t count_ind = 0;
-	__delay_ms(1000);
-	if (ns_sensors::getStatusWork() != 0)
-	{
-		ns_sensors::startOfDataCollection();
-	}
+// 	SCR->Clear();
+// 	SCR->flicker = false;
+// 	ns_sensors::setDebugStat(false);
+// 	uint8_t count_ind = 0;
+// 	__delay_ms(1000);
+// 	if (ns_sensors::getStatusWork() != 0)
+// 	{
+// 		ns_sensors::startOfDataCollection();
+// 	}
 // 	ns_sensors::startOfDataCollection();
 	while(true)
 	{
-		if (++count_ind == 5)
-		{
-			count_ind = 0;
+// 		if (++count_ind == 5)
+// 		{
+// 			count_ind = 0;
 			
 // 			if (ns_sensors::getDebugStat())			SCR->PutChar((uint8_t)0, 'D');
 // 			else									SCR->PutChar((uint8_t)0, 'O');
@@ -139,72 +140,72 @@ int main(void)
 // 						break;
 // 				}
 // 			}
-			{
-				ns_device::MainCicle();
-				switch (ns_device::core->getStat())
-				{
-					case CORESTAT_ERROR:
-// 						SCR->Clear();
-// 						SCR->String_P((uint8_t)0, PSTR("Ошибка"));
-						ns_device::core->resetStat();
-						break;
-					case CORESTAT_OK:
- 						SCR->Clear();
-//						SCR->DigitZ((uint8_t)0, 5, ns_device::core->getCurrentLenghtTube());
-//						SCR->DigitZ(8, 1, STECK_TUBE->getCountSteck());
-						ns_device::core->resetStat();
-// 						SCR->DigitM( 8, 6, STECK_TUBE->getLenghtTube(STECK_TUBE->getCountSteck()-1));
-// 						SCR->DigitM(24, 6, STECK_TUBE->getLenghtTube(STECK_TUBE->getCountSteck()-0));
-// 						SCR->DigitZ(16, 5, STECK_TUBE->tubes[0].lenght);
-// 						SCR->DigitZ(21, 5, STECK_TUBE->tubes[1].lenght);
-// 						SCR->DigitZ(26, 5, STECK_TUBE->tubes[2].lenght);
+// 			{
+// 				ns_device::MainCicle();
+// 				switch (ns_device::core->getStat())
+// 				{
+// 					case CORESTAT_ERROR:
+// // 						SCR->Clear();
+// // 						SCR->String_P((uint8_t)0, PSTR("Ошибка"));
+// 						ns_device::core->resetStat();
+// 						break;
+// 					case CORESTAT_OK:
+//  						SCR->Clear();
+// //						SCR->DigitZ((uint8_t)0, 5, ns_device::core->getCurrentLenghtTube());
+// //						SCR->DigitZ(8, 1, STECK_TUBE->getCountSteck());
+// 						ns_device::core->resetStat();
+// // 						SCR->DigitM( 8, 6, STECK_TUBE->getLenghtTube(STECK_TUBE->getCountSteck()-1));
+// // 						SCR->DigitM(24, 6, STECK_TUBE->getLenghtTube(STECK_TUBE->getCountSteck()-0));
+// // 						SCR->DigitZ(16, 5, STECK_TUBE->tubes[0].lenght);
+// // 						SCR->DigitZ(21, 5, STECK_TUBE->tubes[1].lenght);
+// // 						SCR->DigitZ(26, 5, STECK_TUBE->tubes[2].lenght);
+// // 						{
+// // 							StekTubeUnit unit = STECK_TUBE->getLenghtTube(STECK_TUBE->getCountSteck());
+// //  							SCR->DigitZ(10, 5, unit.lenght);
+// // 						}
 // 						{
-// 							StekTubeUnit unit = STECK_TUBE->getLenghtTube(STECK_TUBE->getCountSteck());
-//  							SCR->DigitZ(10, 5, unit.lenght);
-// 						}
-						{
-// 							signed char max = STECK_TUBE->getCountSteckMax() - 1;
- 							signed char x;
-							
-// 							x = normX(STECK_TUBE->getCountSteckCurrent() - 0, 0, max);
-							x = STECK_TUBE->getCountSteckCurrent();
-//							SCR->DigitM(16, 3, x);
-							StekTubeUnit unit;
-							unit = STECK_TUBE->getLenghtTube(x - 2);
-							if (unit.n > 0 && unit.n < 100)
-							{
- 								SCR->DigitM( 7, 2, unit.n);
- 								SCR->DigitM(10, 5, unit.lenght);
-							}
- 							unit = STECK_TUBE->getLenghtTube(x - 1);
-							if (unit.n > 0 && unit.n < 100)
-							{
-  								SCR->DigitM(23, 2, unit.n);
-  								SCR->DigitM(26, 5, unit.lenght);
-							}
-							
-// 							// массив номеров
-// 							SCR->DigitZ(16, 2, STECK_TUBE->tubes[0].n);
-// 							SCR->DigitZ(19, 2, STECK_TUBE->tubes[1].n);
-// 							SCR->DigitZ(22, 2, STECK_TUBE->tubes[2].n);
-// 							// текущий(на самом деле следующий) номер
+// // 							signed char max = STECK_TUBE->getCountSteckMax() - 1;
+//  							signed char x;
+// 							
+// // 							x = normX(STECK_TUBE->getCountSteckCurrent() - 0, 0, max);
 // 							x = STECK_TUBE->getCountSteckCurrent();
-// 							SCR->DigitZ(25, 2, x);
-// 							// чтение из текущего номера
-// 							y = STECK_TUBE->getLenghtTube(x - 1).n;
-// 							SCR->DigitZ(28, 2, y);
-						}
-						break;
-					default:
-						SCR->PutChar(16, ((*ns_sensors::sensorMass[0]) ? 1 : 0) );
-						SCR->PutChar(17, ((*ns_sensors::sensorMass[1]) ? 1 : 0) );
-						SCR->PutChar(18, ((*ns_sensors::sensorMass[2]) ? 1 : 0) );
-						SCR->DigitZ((uint8_t)0, 5, ns_sensors::v_count);
-						break;
-				}
-			}
+// //							SCR->DigitM(16, 3, x);
+// 							StekTubeUnit unit;
+// 							unit = STECK_TUBE->getLenghtTube(x - 2);
+// 							if (unit.n > 0 && unit.n < 100)
+// 							{
+//  								SCR->DigitM( 7, 2, unit.n);
+//  								SCR->DigitM(10, 5, unit.lenght);
+// 							}
+//  							unit = STECK_TUBE->getLenghtTube(x - 1);
+// 							if (unit.n > 0 && unit.n < 100)
+// 							{
+//   								SCR->DigitM(23, 2, unit.n);
+//   								SCR->DigitM(26, 5, unit.lenght);
+// 							}
+// 							
+// // 							// массив номеров
+// // 							SCR->DigitZ(16, 2, STECK_TUBE->tubes[0].n);
+// // 							SCR->DigitZ(19, 2, STECK_TUBE->tubes[1].n);
+// // 							SCR->DigitZ(22, 2, STECK_TUBE->tubes[2].n);
+// // 							// текущий(на самом деле следующий) номер
+// // 							x = STECK_TUBE->getCountSteckCurrent();
+// // 							SCR->DigitZ(25, 2, x);
+// // 							// чтение из текущего номера
+// // 							y = STECK_TUBE->getLenghtTube(x - 1).n;
+// // 							SCR->DigitZ(28, 2, y);
+// 						}
+// 						break;
+// 					default:
+// 						SCR->PutChar(16, ((*ns_sensors::sensorMass[0]) ? 1 : 0) );
+// 						SCR->PutChar(17, ((*ns_sensors::sensorMass[1]) ? 1 : 0) );
+// 						SCR->PutChar(18, ((*ns_sensors::sensorMass[2]) ? 1 : 0) );
+// 						SCR->DigitZ((uint8_t)0, 5, ns_sensors::v_count);
+// 						break;
+// 				}
+// 			}
 			
-		}
+// 		}
 	}
 #endif
 	return 0;

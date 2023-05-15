@@ -125,7 +125,8 @@ Serial* RS_232::init(rsBaud baud, rsParity parity, rsBit bit, uint8_t sizeBuffIn
 	RS_232 *rs = new RS_232();
 	rs->buffInp = new RingBuffer(new uint8_t[sizeBuffInp], sizeBuffInp);
 	rs->buffOut = new RingBuffer(new uint8_t[sizeBuffOut], sizeBuffOut);
-	uint16_t ubrr = (F_CPU / 16 / baud) - 1;
+// 	uint16_t ubrr = (F_CPU / 16 / baud) - 1;
+	uint16_t ubrr = (F_CPU / 8 / baud) - 1;
 	UBRR0H = (ubrr >> 8) & 0xff;
 	UBRR0L = ubrr & 0xff;
 	//

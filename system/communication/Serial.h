@@ -25,8 +25,10 @@ public:
 	//
 	void digit(uint8_t len, int32_t digit);
 	void digitZ(uint8_t len, int32_t digit);
+	//
+	void hex_1(uint8_t digit);
 protected:
-
+	char hex_dec(uint8_t cod);
 }; //Serial
 
 #endif //__SERIAL_H__

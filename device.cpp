@@ -26,8 +26,8 @@ namespace ns_device
 #endif // CONF_KEY4
 
 	// Core
-	Core	*core;
-	StekTube *steckTube;
+// 	Core	*core;
+// 	StekTube *steckTube;
 	
 #ifdef CONF_RS232
 	Serial *rs232;
@@ -53,7 +53,7 @@ namespace ns_device
 
 
 #ifdef CONF_RS232
- 		rs232 = RS_232::init(baud19200, DISABLE, bit8, 8, 64);
+ 		rs232 = RS_232::init(baud9600, DISABLE, bit8, 8, 64);
 		rs232->string_P(PSTR(" Start programm\r\n"));
 #endif // CONF_RS232
 
@@ -77,10 +77,10 @@ namespace ns_device
 		ns_watchdog::Init(WDTO_2S);
 #endif // CONF_WATHDOG
 		// пользовательские
-		ns_sensors::Init();
+// 		ns_sensors::Init();
 		// ********************************************** Длина СТЕКА ****************************
-		steckTube = new StekTube(15);
-		core = new Core(StekTube::newTube);
+// 		steckTube = new StekTube(15);
+// 		core = new Core(StekTube::newTube);
 	}
 // ========================================	
 	void Timer_lcd()
@@ -96,10 +96,24 @@ namespace ns_device
 #endif // CONF_MENU
 	}
 // =======================================
+	uint8_t count_timer = 0;
+	uint16_t dev = 0;
 	void Timer_Usr()
 	{
 		// прерывание для измерение
-		ns_sensors::interrupt();
+// 		ns_sensors::interrupt();
+		// --------
+		if (++dev == 1000)
+		{
+			dev = 0;
+			rs232->sendByte(0xe6);
+			rs232->sendByte(0x19);
+			rs232->sendByte(count_timer++);
+// 			rs232->hex_1(0xe6);
+// 			rs232->endLine();
+// 			rs232->hex_1(count_timer++);
+// 			rs232->endLine();
+		}
 	}
 // ======================= ******************** ==================
 	void MainCicle()
@@ -112,7 +126,7 @@ namespace ns_device
 		ns_watchdog::ResetCount();
 #endif // CONF_WATHDOG
 
-		ns_sensors::mainCicle();
-		core->mainCycle();
+// 		ns_sensors::mainCicle();
+// 		core->mainCycle();
 	}
 }

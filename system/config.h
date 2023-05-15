@@ -9,15 +9,15 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-#define CONF_LCD
-//#define CONF_LCD_24
+// #define CONF_LCD
+// #define CONF_LCD_24
 
-#define CONF_KEY4
-#define CONF_MENU
+// #define CONF_KEY4
+// #define CONF_MENU
 
 #define CONF_TIMER_MAIN
 
-#define CONF_WATHDOG
+// #define CONF_WATHDOG
 
 #define CONF_RS232
 // 

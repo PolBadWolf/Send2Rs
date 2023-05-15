@@ -5,6 +5,8 @@
 * Author: Gumerovmn
 */
 
+#include "menu.h"
+#ifdef CONF_MENU
 
 #include "MenuEdit_Uint16T.h"
 #include "../../device.h"
@@ -109,3 +111,5 @@ void	MenuEdit_Uint16T::enter()
 	// тут надо использовать функцию для аварийного выхода
 	else						Main_menu();
 }
+
+#endif

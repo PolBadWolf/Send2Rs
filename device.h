@@ -63,8 +63,8 @@ namespace ns_device
 	//users
 // ======================
 	// Core
-	extern Core	*core;
-	extern StekTube *steckTube;
+// 	extern Core	*core;
+// 	extern StekTube *steckTube;
 // ======================
 
 	void Init();

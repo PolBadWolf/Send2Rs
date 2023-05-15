@@ -10,7 +10,7 @@
 #include "Sensor.h"
 
 #include "../device.h"
-#define		SCR		ns_device::scr
+// #define		SCR		ns_device::scr
 
 namespace ns_sensors
 {
